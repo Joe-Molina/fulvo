@@ -41,6 +41,13 @@ export const authOptions = {
   }
 };
 
+export async function loginIsRequiredServer(){
+  const session = await getServerSession(authOptions)
+  console.log(session)
+
+  if(!session) return redirect("/auth/login")
+}
+
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
