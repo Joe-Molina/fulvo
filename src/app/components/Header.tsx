@@ -9,6 +9,7 @@ export function Header() {
         <div className='flex gap-6'>
         <Link rel="stylesheet" href="/equipos" className='hover:text-slate-400 transition '>Crear Equipos</Link>
         <Link rel="stylesheet" href="/jugadores" className='hover:text-slate-400  transition '>Crear Jugadores</Link>
+        <Link rel="stylesheet" href="/auditoria" className='hover:text-slate-400  transition '>auditoria</Link>
         </div>
         <ButtonSignOut/>
     </header>

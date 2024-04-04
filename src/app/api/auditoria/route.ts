@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const auditoria = await prisma.iniciosDeSesion.findMany();
+    const auditoria = await prisma.iniciosDeSesion.findMany({
+      orderBy: {
+        created_at: "desc",
+      },
+    });
     return NextResponse.json(auditoria);
   } catch (error) {
     if (error instanceof Error) {

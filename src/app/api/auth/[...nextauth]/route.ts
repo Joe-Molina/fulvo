@@ -31,10 +31,17 @@ export const authOptions = {
 
         if (!matchPassword) throw new Error("Wrong password");
 
+        const newInicioDeSesion = await prisma.iniciosDeSesion.create({
+          data: {
+            id_usuario: userFound.id,
+          },
+        });
+
         return {
           id: userFound.id,
           name: userFound.username,
           email: userFound.email,
+          newInicioDeSesion,
         };
       },
     }),
