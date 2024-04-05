@@ -8,16 +8,11 @@ const HoraActual = (hora) => {
 }
 
 //@ts-ignore
-const GetUsuario = (id) => {
-    
-    
-
-    return id
-}
-
 
 export function Auditoria() {
   let [auditoria, setauditoria] = useState([])
+  let [usuarios, setusuarios] = useState([])
+  
 
     useEffect(() => {
 
@@ -28,6 +23,23 @@ export function Auditoria() {
 
 
     }, [])
+
+    useEffect(() => {
+      fetch('/api/usuarios')
+      .then(response => response.json())
+      .then(data => {setusuarios(data)})
+      .catch(error => console.log(error));
+    },[])
+
+    const buscarNombreUsuariopoPorId = (id:any) => {
+        //@ts-ignore
+        const equipo = usuarios.find(i => i.id === id) || null
+        //@ts-ignore
+        if(equipo) return equipo.username
+
+    }
+
+    console.log(usuarios)
 
     console.log(auditoria)
   return (
@@ -42,7 +54,7 @@ export function Auditoria() {
       
         auditoria.map((audi: any, index) => (
           <article className=' bg-neutral-950 text-neutral-300 p-1 px-4 flex justify-start w-full border-b border-b-neutral-900' key={index}>
-            <h3 className='w-32 mr-2 max-h-6 overflow-hidden'>{GetUsuario(audi.id_usuario)}</h3>
+            <h3 className='w-32 mr-2 max-h-6 overflow-hidden'>{buscarNombreUsuariopoPorId(audi.id_usuario)}</h3>
             <p className=' overflow-hidden'>{HoraActual(audi.created_at)}</p>
           </article>
         ))

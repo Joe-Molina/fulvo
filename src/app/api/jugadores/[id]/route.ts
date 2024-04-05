@@ -7,9 +7,9 @@ interface Params {
 
 export async function GET(request: Request, { params }: Params) {
   try {
-    const jugadores = await prisma.jugadores.findFirst({
+    const jugadores = await prisma.jugadores.findMany({
       where: {
-        id: Number(params.id),
+        id_equipo: Number(params.id),
       },
     });
 

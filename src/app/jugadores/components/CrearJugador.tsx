@@ -17,8 +17,6 @@ export function CrearJugadorCard({id}: any) {
         obtenerEquipos();
     }, []);
     
-    console.log(Equipos)
-    
     const [nombre, setnombre] = useState('')
     const [descripcion, setdescripcion] = useState('')
     const [apellido, setapellido] = useState('')
@@ -37,7 +35,7 @@ export function CrearJugadorCard({id}: any) {
             e.preventDefault();
 
             if(id_equipo == 0){
-                alert('no puedes crear un jugador sin haber creado un equipo antes')
+                alert('no puedes crear un jugador sin asignarlo a un equipo')
                 return
             } else {
                     await CreateJugador({
@@ -61,8 +59,9 @@ export function CrearJugadorCard({id}: any) {
             <input type="text" name='posicion' onChange={(e) => setposicion(e.target.value)} placeholder='posicion' className='bg-neutral-900 p-1 rounded-md ' required/>
             <input type="date" name='fecha Nacimiento' onChange={(e) => setfechaDeNacimiento(e.target.value)} placeholder='fecha Nacimiento' className='bg-neutral-900 p-1 rounded-md ' required/>
 
-            <select className='bg-neutral-900 text-neutral-300 p-1 rounded-md' name="productos" id="" onChange={(e) => { const number = Number(e.target.value); setid_equipo(number);}}>
+            <select className='bg-neutral-900 text-neutral-300 p-1 rounded-md' name="jugadores" id="" onChange={(e) => { const number = Number(e.target.value); setid_equipo(number); console.log(number)}}>
 
+                <option className='placeholder:text-neutral-500 p-1 rounded-md'  value={0}> escoge un equipo</option>
                 {
                     Equipos.map((equipo, index) => (
                        //@ts-ignore
