@@ -55,20 +55,20 @@ function RegisterPage() {
           placeholder="yourUser123"
         />
 
-<label htmlFor="tipo_usuario" className="text-slate-500 mb-2 block text-sm">
+        <label htmlFor="tipo_usuario" className="text-slate-500 mb-2 block text-sm">
           tipo de usuario:
         </label>
 
-        <select name="tipo_usuario" 
-        {...register("tipo_usuario", {
+        <select name="tipo_usuario"
+          {...register("tipo_usuario", {
             required: {
               value: true,
               message: "tipo_usuario is required",
             },
-          })}>
+          })} className="bg-neutral-800">
           <option value="admin">admin</option>
           <option value="user">user</option>
-        </select>  
+        </select>
 
         <label htmlFor="email" className="text-slate-500 mb-2 block text-sm">
           Email:
