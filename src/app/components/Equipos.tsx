@@ -20,7 +20,11 @@ const handleClick2 = async (id: any) => {
   location.reload()
 }
 
-export function Equipos() {
+export function Equipos({ admin }: any) {
+
+  const esAdmin = (admin.tipo_usuario == 'admin') ? true : false
+
+
   let [equipos, setequipos] = useState([])
 
   console.log(equipos)
@@ -48,7 +52,7 @@ export function Equipos() {
   return (
     <div className='flex gap-10'>
       <div className='flex flex-col overflow-auto w-1/2'>
-        <article className='my-2 bg-neutral-800 text-neutral-300 p-1 px-4 flex justify-start w-full '>
+        <article className={`my-2  p-1 px-4 flex justify-start w-full ${esAdmin ? 'bg-neutral-900 text-neutral-300' : 'text-black border-neutral-600 border-b'} `}>
           <h3 className='w-32 mr-2'>Nombre</h3>
           <p className=' w-32 mr-2'>logo</p>
           <p className=' '>descripcion</p>
@@ -56,21 +60,21 @@ export function Equipos() {
         {
 
           equipos.map((equipo: any, index) => (
-            <article className=' bg-neutral-800 text-neutral-300 p-1 px-4 flex justify-start w-full border-b border-b-neutral-900 hover:bg-slate-700 justify-between' key={index} onClick={() => { actualizarJugadores(equipo.id) }}>
+            <article className={`  text-neutral-300 p-1 px-4 flex w-full border-b   justify-between transition duration-75 ${esAdmin ? 'border-b-neutral-900 bg-neutral-800 hover:bg-slate-700' : ' text-black border-neutral-600 hover:bg-slate-700 hover:text-slate-200'}`} key={index} onClick={() => { actualizarJugadores(equipo.id) }}>
               <div className='flex'>
                 <h3 className='w-32 mr-2 max-h-6 overflow-hidden'>{equipo.nombre}</h3>
                 <div className='w-32'><img className='w-8 h-8 mr-2 max-h-6 overflow-hidden ' src={"/fotos/" + equipo.logo} /></div>
                 <p className=' overflow-hidden'>{equipo.descripcion}</p>
               </div>
 
-              <button onClick={() => handleClick(equipo.id)} className='bg-red-600 text-white px-3 py-1 rounded-sm m-1 hover:bg-red-700 transition'>Eliminar</button>
+              {esAdmin && <button onClick={() => handleClick(equipo.id)} className='bg-red-600 text-white px-3 py-1 rounded-sm m-1 hover:bg-red-700 transition'>Eliminar</button>}
             </article>
           ))
         }
       </div>
       <div className='flex flex-col overflow-auto w-1/2'>
 
-        <article className='my-2 bg-neutral-900 text-neutral-300 p-1 px-4 flex justify-start w-full '>
+        <article className={`my-2  p-1 px-4 flex justify-start w-full ${esAdmin ? 'bg-neutral-900 text-neutral-300' : 'text-black border-neutral-600 border-b'} `}>
           <h3 className='w-32 mr-2'>Nombre</h3>
           <p className=' w-32 mr-2'>nacimiento</p>
           <p className=' w-32 mr-2'>posicion</p>
@@ -82,14 +86,14 @@ export function Equipos() {
             jugadores.map((jugador: any, index) => {
 
               return (
-                <article className=' bg-neutral-800 text-neutral-300 p-1 px-4 flex justify-start w-full border-b border-b-neutral-900 shadow-lg rounded-sm justify-between' key={index}>
+                <article className={`  text-neutral-300 p-1 px-4 flex w-full border-b   justify-between transition duration-75 ${esAdmin ? 'border-b-neutral-900 bg-neutral-800 hover:bg-slate-700' : ' text-black border-neutral-600'}`} key={index}>
                   <div className='flex'>
                     <h3 className='w-32 mr-2 max-h-6 overflow-hidden'>{jugador.nombre + ' ' + jugador.apellido}</h3>
                     <p className=' overflow-hidden w-32 mr-2'>{(jugador.fechaDeNacimiento.slice(2, 10))}</p>
                     <p className=' overflow-hidden w-32 mr-2'>{jugador.posicion}</p>
                     <p className=' overflow-hidden'>{jugador.descripcion}</p>
                   </div>
-                  <button onClick={() => handleClick2(jugador.id)} className='bg-red-600 text-white px-3 py-1 rounded-sm m-1 hover:bg-red-700 transition'>Eliminar</button>
+                  {esAdmin && <button onClick={() => handleClick2(jugador.id)} className='bg-red-600 text-white px-3 py-1 rounded-sm m-1 hover:bg-red-700 transition'>Eliminar</button>}
                 </article>
               )
             })

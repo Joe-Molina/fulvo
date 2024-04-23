@@ -3,24 +3,47 @@ import Link from 'next/link'
 import { ButtonSignIn, ButtonSignOut } from './buttonSignOut'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
+import { RespaldoButton } from './RespaldoButton'
+import { getUsuario } from '../services/Getsuario'
+
+
 
 export async function Header() {
+
+
 
   //@ts-ignore
   const session = await getServerSession(authOptions)
 
-  return (
-    <header className='w-full flex justify-around gap-6 bg-neutral-900 text-neutral-100 font-light h-14 items-center shadow-md'>
-      <Link href="/" rel="stylesheet">Funlinafutsal</Link>
+  const usuario = await getUsuario(session)
 
+  console.log('usuario')
+  console.log(usuario)
+
+
+  return (
+    //@ts-ignore
+    <header className={`w-full flex justify-around gap-6   font-light h-14 items-center shadow-md ${usuario.tipo_usuario == 'admin' ? 'bg-neutral-900 text-neutral-100' : 'bg-white text-neutral-900'}`}>
+      <Link href="/" rel="stylesheet">Funlinafutsal</Link>
       {
         session ?
 
-          <div className='flex gap-6'>
-            <Link rel="stylesheet" href="/equipos" className='hover:text-slate-400 transition '>Crear Equipos</Link>
+          <div className='flex items-center gap-6'>
+
             <Link rel="stylesheet" href="/jugadores" className='hover:text-slate-400  transition '>Crear Jugadores</Link>
-            <Link rel="stylesheet" href="/auditoria" className='hover:text-slate-400  transition '>auditoria</Link>
-            <ButtonSignOut />
+            {
+              //@ts-ignore
+              usuario.tipo_usuario == 'admin' &&
+              <>
+                <Link rel="stylesheet" href="/equipos" className='hover:text-slate-400 transition '>Crear Equipos</Link>
+                <Link rel="stylesheet" href="/auditoria" className='hover:text-slate-400  transition '>auditoria</Link>
+                <RespaldoButton />
+              </>
+
+            }
+
+
+            {/* <ButtonSignOut /> */}
           </div>
 
           :
